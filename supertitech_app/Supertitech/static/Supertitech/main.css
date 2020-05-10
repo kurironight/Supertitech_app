@@ -1,0 +1,68 @@
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+h1, h3 {
+  color: #333333;
+  padding: 0;
+}
+
+/* ========== ヘッダー ========== */
+header {
+  padding: 0;
+  background-color: #42a5f5;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+header div.supertitech-logo {
+  margin: 0 0 0 20px;
+}
+header h1 a{
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-size: 30px;
+  font-family: "Corbel";
+  display: inline-block;
+  text-decoration: none;
+}
+/* ========== /ヘッダー ========== */
+
+div.main-container {
+  margin: 0 auto 0 auto;
+}
+div.content-container {
+  margin: 40px auto 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* ========== カードレイアウト ========== */
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #2196f3;
+  box-sizing: border-box;
+}
+.card h3 {
+  background-color: #2196f3;
+  padding: 5px 10px;
+  margin: 0;
+  color: #fff;
+}
+
+.card-content {
+  background-color: #fff;
+  height: 100%;
+}
+/* ========== /カードレイアウト ========== */

@@ -1,0 +1,28 @@
+table{
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 13px;
+  color: #333333;
+  table-layout: fixed;
+  margin-top: 10px;
+}
+
+th,td{
+  padding: 10px 0;
+  text-align: center;
+}
+
+thead tr {
+  background-color: #1976D2;
+  color: #fff;
+}
+tbody tr:nth-child(odd){
+  background-color: #E1F5FE;
+}
+tbody td p {
+  margin: 0;
+  padding: 0;
+  word-wrap: break-word;
+}
+
