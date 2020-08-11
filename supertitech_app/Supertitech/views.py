@@ -115,8 +115,12 @@ def QRmatrixsite(request):
             'QR_form': form,
         })
     else:
-        data = QRmatrix.objects.get(owner=request.user)
-        form = QRmatrixForm(instance=data)  # フォームの中に最初からデータが入っているように見せるため
+        try:
+            data = QRmatrix.objects.get(owner=request.user)
+            form = QRmatrixForm(instance=data)  # フォームの中に最初からデータが入っているように見せるため
+        except:
+            data = QRmatrix()
+            form = QRmatrixForm(instance=data)
 
         return render(request, 'Supertitech/QRmatrix.html', {
             'QR_form': form,
