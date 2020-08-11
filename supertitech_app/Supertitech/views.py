@@ -266,12 +266,11 @@ def subdelete(request, subject_id):
             else:
                 schedule[i][j] = 'まだpublicに登録してない'
 
-    image = ProfilImage.objects.get(owner=request.user)
+    #image = ProfilImage.objects.get(owner=request.user)
     params = {
         'user': request.user,
         'quarter_form': quarterselection,
         'times': schedule,
-        'TopImage': image,
     }
     return render(request, 'Supertitech/menu.html', params)
 
