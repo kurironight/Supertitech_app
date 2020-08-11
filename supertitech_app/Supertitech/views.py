@@ -1,17 +1,19 @@
-from django.shortcuts import render, redirect
-from .forms import PastExamFileForm, DocumentFileForm, SignUpForm, LoginForm, QuarterSelectionForm, QuarterSelectformenu, PostForm, ResPostForm, ProfilImageForm, QRmatrixForm
-from django.contrib.auth import authenticate, login
-from .models import PastExamFile, DocumentFile, Star, Timeschedule, Subject, Reputation, Res, ProfilImage, PastExamFile, DocumentFile, QRmatrix, testdata
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView
-from django.db.models import Q
-from .QRfromuser import QRLogin, extractQR
-from .forQR import scrapingLogin
-from io import TextIOWrapper, StringIO
-import csv
 from django.http import HttpResponse
-
+import csv
+from io import TextIOWrapper
+from .forQR import scrapingLogin
+from .QRfromuser import QRLogin, extractQR
+from django.db.models import Q
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .forms import PastExamFileForm, DocumentFileForm, SignUpForm, LoginForm, \
+    QuarterSelectionForm, QuarterSelectformenu, PostForm, ResPostForm, \
+    ProfilImageForm, QRmatrixForm
+from django.contrib.auth import login
+from .models import DocumentFile, Star, Subject,\
+    Reputation, Res, ProfilImage, PastExamFile, QRmatrix
 
 
 def csvtest(request):
@@ -25,6 +27,7 @@ def csvtest(request):
         a = testcsv.objects.first()
         return HttpResponse(a.a[1])
 
+
 def upload(request):
     if 'csv' in request.FILES:
         form_data = TextIOWrapper(request.FILES['csv'].file, encoding='utf-8')
@@ -37,8 +40,8 @@ def upload(request):
                 elif not (youbi[1].isdigit() and youbi[3].isdigit()):
                     pass
                 else:
-                    timelist=[]
-                    if((float(youbi[1])+1)//2==float(youbi[3])//2):
+                    timelist = []
+                    if((float(youbi[1])+1)//2 == float(youbi[3])//2):
                         timelist.append(float(youbi[3])//2)
                     else:
                         timelist.append((float(youbi[1])+1)//2)
@@ -47,17 +50,17 @@ def upload(request):
                         subject = Subject()
                         subject.title = line[1]
                         subject.teacher = line[2]
-                        #曜日を数値に変換して代入する
-                        if(line[3][0]=="  "):
+                        # 曜日を数値に変換して代入する
+                        if(line[3][0] == "  "):
                             subject.data3 = 0
                         else:
-                            if(youbi[0]=='月'):
+                            if(youbi[0] == '月'):
                                 subject.youbi = 1
-                            elif(youbi[0]=='火'):
+                            elif(youbi[0] == '火'):
                                 subject.youbi = 2
-                            elif(youbi[0]=='水'):
+                            elif(youbi[0] == '水'):
                                 subject.youbi = 3
-                            elif(youbi[0]=='木'):
+                            elif(youbi[0] == '木'):
                                 subject.youbi = 4
                             else:
                                 subject.youbi = 5
@@ -69,12 +72,11 @@ def upload(request):
                         subject.content = line[7]
                         subject.grade = line[4][5]
                         subject.save()
-          
-        return render(request,'Supertitech/upload.html')
+
+        return render(request, 'Supertitech/upload.html')
     else:
-        return render(request,'Supertitech/upload.html')
-        
-            
+        return render(request, 'Supertitech/upload.html')
+
 
 def profile(request):
     if request.method == 'POST':
@@ -132,7 +134,7 @@ def goportal(request):
         'QR_form': form,
     })
 
- # 学籍番号及びPWが必要、それがあればどのアカウントでも入れる
+    # 学籍番号及びPWが必要、それがあればどのアカウントでも入れる
 
 
 def goportalbeta(request):
@@ -204,16 +206,16 @@ def menu(request):
                 else:
                     schedule[i][j] = 'まだpublicに登録してない'
 
-    image = ProfilImage.objects.get(owner=request.user)
     params = {
         'user': request.user,
         'quarter_form': quarterselection,
         'times': schedule,
-        'TopImage': image,
     }
     return render(request, 'Supertitech/menu.html', params)
 
-#授業を時間割に登録する
+# 授業を時間割に登録する
+
+
 def add(request, subject_id):
     subject = Subject.objects.get(id=subject_id)
     get_subject = Subject.objects.filter(title=subject.title)
@@ -235,10 +237,12 @@ def add(request, subject_id):
     }
     return render(request, 'Supertitech/add.html', params)
 
-#登録した時間割を削除する
+# 登録した時間割を削除する
+
+
 def subdelete(request, subject_id):
     public = User.objects.filter(username='public').first()
-    get_subject=Subject.objects.get(id=subject_id)
+    get_subject = Subject.objects.get(id=subject_id)
     subjectlist = Subject.objects.filter(title=get_subject.title)
     for item in subjectlist:
         item.user.remove(request.user)
@@ -246,7 +250,7 @@ def subdelete(request, subject_id):
     qota = get_subject.Q
     quarterselection = QuarterSelectformenu()
     schedule = [['1限', 0, 0, 0, 0, 0], ['2限', 0, 0, 0, 0, 0], [
-            '3限', 0, 0, 0, 0, 0], ['4限', 0, 0, 0, 0, 0], ['5限', 0, 0, 0, 0, 0]]
+        '3限', 0, 0, 0, 0, 0], ['4限', 0, 0, 0, 0, 0], ['5限', 0, 0, 0, 0, 0]]
     for i in range(0, 5):  # [1:1時限,2:2時限,...,5:5時限]
         for j in range(1, 6):  # [1:月曜,2:火曜,...,5:金曜]
             if Subject.objects.filter(
@@ -271,7 +275,9 @@ def subdelete(request, subject_id):
     }
     return render(request, 'Supertitech/menu.html', params)
 
-#授業評価ページ
+# 授業評価ページ
+
+
 def reputation(request, subject_id):
     request_subject = Subject.objects.get(id=subject_id)
     print(request_subject.title)
@@ -327,7 +333,8 @@ def reputation(request, subject_id):
     Reslist = Res.objects.filter(subject=get_subject)
     documentlist = DocumentFile.objects.filter(subject=get_subject)
     pastexamlist = PastExamFile.objects.filter(subject=get_subject)
-    pinres = Res.objects.filter(subject=get_subject).filter(pinuser=request.user)
+    pinres = Res.objects.filter(
+        subject=get_subject).filter(pinuser=request.user)
     params = {
         'pinres': pinres,
         'examform': examform,
@@ -343,11 +350,14 @@ def reputation(request, subject_id):
     }
     return render(request, 'Supertitech/reputation.html', params)
 
-#ピン止めをクリックしたとき
+# ピン止めをクリックしたとき
+
+
 def pincheck(request, res_id):
     get_res = Res.objects.get(id=res_id)
-    get_subject =  get_res.subject
-    pinres = Res.objects.filter(subject=get_subject).filter(pinuser=request.user)
+    get_subject = get_res.subject
+    pinres = Res.objects.filter(
+        subject=get_subject).filter(pinuser=request.user)
     pinuserlist = get_res.pinuser.all()
     if request.user in pinuserlist:
         get_res.pinuser.remove(request.user)
@@ -377,13 +387,16 @@ def pincheck(request, res_id):
     }
     return render(request, 'Supertitech/reputation.html', params)
 
-#過去問を消去するとき
+# 過去問を消去するとき
+
+
 def examdelete(request, exam_id):
     get_exam = PastExamFile.objects.get(id=exam_id)
     get_subject = get_exam.subject
     get_exam.delete()
 
-    pinres = Res.objects.filter(subject=get_subject).filter(pinuser=request.user)
+    pinres = Res.objects.filter(
+        subject=get_subject).filter(pinuser=request.user)
     reputations = Reputation.objects.filter(subject=get_subject)
     form = PostForm(request.user)
     Reslist = Res.objects.filter(subject=get_subject)
@@ -407,13 +420,16 @@ def examdelete(request, exam_id):
     }
     return render(request, 'Supertitech/reputation.html', params)
 
-#資料を削除するとき
+# 資料を削除するとき
+
+
 def docdelete(request, document_id):
     get_document = DocumentFile.objects.get(id=document_id)
     get_subject = get_document.subject
     get_document.delete()
 
-    pinres = Res.objects.filter(subject=get_subject).filter(pinuser=request.user)
+    pinres = Res.objects.filter(
+        subject=get_subject).filter(pinuser=request.user)
     reputations = Reputation.objects.filter(subject=get_subject)
     form = PostForm(request.user)
     Reslist = Res.objects.filter(subject=get_subject)
@@ -452,7 +468,8 @@ def good(request, repu_id):
         get_reputation.good_count += 1
         get_reputation.save()
 
-    pinres = Res.objects.filter(subject=get_subject).filter(pinuser=request.user)
+    pinres = Res.objects.filter(
+        subject=get_subject).filter(pinuser=request.user)
     reputations = Reputation.objects.filter(subject=get_reputation.subject)
     form = PostForm(request.user)
     Reslist = Res.objects.filter(subject=get_reputation.subject)
@@ -485,7 +502,8 @@ def repudelete(request, delete_id):
         item.delete()
 
     get_subject = Subject.objects.get(id=get_reputation.subject.id)
-    pinres = Res.objects.filter(subject=get_subject).filter(pinuser=request.user)    
+    pinres = Res.objects.filter(
+        subject=get_subject).filter(pinuser=request.user)
     get_reputation.delete()
     reputations = Reputation.objects.filter(subject=get_subject)
     form = PostForm(request.user)
@@ -516,7 +534,8 @@ def resdelete(request, delete_id):
     get_subject = Subject.objects.get(id=get_res.subject.id)
     get_res.delete()
 
-    pinres = Res.objects.filter(subject=get_subject).filter(pinuser=request.user)
+    pinres = Res.objects.filter(
+        subject=get_subject).filter(pinuser=request.user)
     reputations = Reputation.objects.filter(subject=get_subject)
     form = PostForm(request.user)
     Reslist = Res.objects.filter(subject=get_subject)
@@ -540,6 +559,7 @@ def resdelete(request, delete_id):
     }
     return render(request, 'Supertitech/reputation.html', params)
 
+
 class loginView(LoginView):
     form_class = LoginForm
     template_name = "Supertitech/login.html"
@@ -555,7 +575,7 @@ def search(request):
         Qlist = []
         Gradelist = []
         timelist = []
-        daylist=[]
+        daylist = []
         for item in request.POST.getlist('quarters'):
             Qlist.append(item)
         for item in request.POST.getlist('grades'):
@@ -571,15 +591,15 @@ def search(request):
             data = Subject.objects.filter(~Q(user=public)).filter(Q__in=Qlist)
 
         if Gradelist != []:
-            data=data.filter(grade__in=Gradelist)
+            data = data.filter(grade__in=Gradelist)
 
         if timelist != []:
-            data=data.filter(time__in=timelist)
+            data = data.filter(time__in=timelist)
 
         if daylist != []:
-            data=data.filter(youbi__in=daylist)
+            data = data.filter(youbi__in=daylist)
 
-        data=data.order_by('Q', 'youbi','time', 'grade')
+        data = data.order_by('Q', 'youbi', 'time', 'grade')
 
         params = {
             'user': request.user,
@@ -620,9 +640,6 @@ def search_time(request, search_Q, search_youbi, search_time):  # 時間割か�
     return render(request, 'Supertitech/search.html', params)
 
 
-
-
-
 def check(request, check_id):  # idを取得しているkどうかの確認用関数だから消しても良い
     subject = Subject.objects.get(id=check_id)
     message = subject.id
@@ -632,4 +649,3 @@ def check(request, check_id):  # idを取得しているkどうかの確認用�
         'item': subject,
     }
     return render(request, 'Supertitech/check.html', params)
-

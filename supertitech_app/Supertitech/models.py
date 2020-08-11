@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-
 class Timeschedule(models.Model):  # 仮の時間割　あとで修正予定
     message = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -69,10 +68,11 @@ class Res(models.Model):
 
 class ProfilImage(models.Model):
     description = models.CharField(max_length=255, blank=True)
-    photo = models.ImageField(upload_to='profilimages/', default='defo')
+    photo = models.ImageField(
+        upload_to='profilimages/', default='media/profilimages/bigmac_l.png')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     owner = models.OneToOneField(
-        User, on_delete='CASCADE', default=1, related_name="profile")
+        User, on_delete='CASCADE', default=1, related_name="profile", blank=True)
 
 
 class QRmatrix(models.Model):
@@ -166,6 +166,7 @@ class QRmatrix(models.Model):
     def __str__(self):
         return str(self.owner)
 
+
 class testdata(models.Model):
     data1 = models.TextField(max_length=100)
     data2 = models.TextField(max_length=100)
@@ -174,7 +175,7 @@ class testdata(models.Model):
     data5 = models.TextField(max_length=100)
     data6 = models.TextField(max_length=100)
 
+
 class Star(models.Model):
     owner = models.ForeignKey(User, on_delete='CASCADE')
     repu = models.ForeignKey(Reputation, on_delete='CASCADE')
-
