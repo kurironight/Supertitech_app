@@ -599,7 +599,7 @@ def search(request):
             data = data.filter(youbi__in=daylist)
 
         if moji != []:
-            data = data.filter(youbi__in=daylist)
+            data = data.filter(title__icontains=moji)
 
         data = data.order_by('Q', 'youbi', 'time', 'grade')
 
