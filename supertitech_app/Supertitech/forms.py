@@ -96,19 +96,6 @@ class QuarterSelectionForm(forms.Form):  # クオーターを利用して授業�
         max_length=100,
         required=False
     )
-    '''def __init__(self, *argss, **kwargs):
-        super(QuarterSelectionForm, self).__init__(*argss, **kwargs)
-        self.fields['quarters'] = forms.MultipleChoiceField(
-            label='Q',
-            widget=forms.CheckboxSelectMultiple,
-            choices=(
-                ('1', '1Q'),
-                ('2', '2Q'),
-                ('3', '3Q'),
-                ('4', '4Q'),
-            ),
-        )
-'''  # userの情報がほしい時のみinitを使う
 
 
 class QuarterSelectformenu(forms.Form):  # menu用Qselectform
@@ -143,6 +130,9 @@ class QRmatrixForm(forms.ModelForm):  # クオーターを利用して授業を�
                   'I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7',
                   'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7',
                   )
+        widgets = {}
+        for i in fields:
+            widgets[i] = forms.TextInput(attrs={'size': 20})
 
 
 class DocumentFileForm(forms.ModelForm):
