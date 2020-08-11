@@ -1,0 +1,58 @@
+{% extends 'Supertitech/base.html' %}
+
+{% block head %}
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <title>search</title>
+  <link rel="stylesheet" type="text/css"
+                         href="{% static 'Supertitech/main.css' %}" />
+  <link rel="stylesheet" type="text/css"
+                         href="{% static 'Supertitech/table.css' %}" />
+  <link rel="stylesheet" type="text/css"
+                         href="{% static 'Supertitech/search.css' %}" />
+</head>
+{% endblock %}
+
+{% block content %}
+<div class="select-schedule-outer">
+  <div class="select-schedule">
+    <p>user:{{user}}</p>
+    <!-- <p>{{message|safe}}</p> -->
+    <form action="{% url 'search' %}" method="post">
+      {% csrf_token %}
+      {{quarter_form}}
+      <input type="submit" value="search">
+    </form>
+  </div>
+</div>
+<div class="subject-info">
+  <table>
+    <thead>
+      <tr>
+        <th>Q</th>
+        <th>day</th>
+        <th>time</th>
+        <th>title</th>
+        <th>code</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in data %}
+      <tr>
+        <td>{{item.Q}}</td>
+        <td>{{item.youbi}}</td>
+        <td>{{item.time}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.code}}</td>
+        <td>
+          <a href="{% url 'add' item.id %}"><button>add</button></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+

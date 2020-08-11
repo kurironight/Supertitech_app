@@ -1,0 +1,68 @@
+{% extends 'Supertitech/base.html' %}
+{% block head %}
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <title>supertitech_menu</title>
+  <link rel="stylesheet" type="text/css"
+                         href="{% static 'Supertitech/main.css' %}" />
+  <link rel="stylesheet" type="text/css"
+                         href="{% static 'Supertitech/menu.css' %}" />
+  <link rel="stylesheet" type="text/css"
+                         href="{% static 'Supertitech/table.css' %}" />
+</head>
+{% endblock %}
+
+{% block content %}
+<div class="student-info-outer">
+  <h3>学生情報</h3>
+  <div class="student-info">
+    <ul>
+      <li><p>名前</p>    <p>{{user}}</p></li>
+    </ul>
+  </div>
+</div>
+<div class="schedule-info">
+  <form action="{% url 'menu' %}" method="post">
+    <div class="select-wrap">
+      {% csrf_token %}
+      {{quarter_form}}
+    </div>
+    <input type="submit" value="select" class="btn-flat-simple">
+  </form>
+
+  <table>
+    <thead>
+      <tr align="center">
+        <th width="10%">  </th>
+        <th>月</th>
+        <th>火</th>
+        <th>水</th>
+        <th>木</th>
+        <th>金</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for time in times %}
+      <tr align="center">
+        {% for item in time %}
+        {% if item == '1限' or item == '2限' or item == '3限' or item == '4限' or item == '5限' or item == 'まだpublicに登録してない' %}
+        <td>{{ item }}</td>
+        {% elif item.title == 'add' %}
+        <td><a href="{% url 'search_time' item.Q item.youbi item.time %}">{{item.title}}</a></td>
+        {% else %}
+        <td class="subject-outer">
+          <div class="subject">
+            <p><a href="{% url 'repu' item.id %}">{{item.title}}</a></p>
+            <p class="subject-location">{{item.classroom}}</p>
+            <p><a href="{% url 'subdelete' item.id %}">×</a></p>
+          </div>
+        </td>
+        {% endif %}
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

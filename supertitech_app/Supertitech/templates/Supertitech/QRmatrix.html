@@ -1,0 +1,150 @@
+{% extends 'Supertitech/base.html' %}
+{% block head %}
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <title>supertitech_menu</title>
+  <link rel="stylesheet" type="text/css"
+                         href="{% static 'Supertitech/main.css' %}" />
+  <link rel="stylesheet" type="text/css"
+                         href="{% static 'Supertitech/menu.css' %}" />
+  <link rel="stylesheet" type="text/css"
+                         href="{% static 'Supertitech/table.css' %}" />
+</head>
+{% endblock %}
+
+{% block content %}
+<div class="student-info-outer">
+  <h3>学生情報</h3>
+  <div class="student-info">
+    <dl>
+      <dt>名前</dt><dd><p>{{user}}</p></dd>
+      <dt>生年月日</dt><dd>1997年10月8日</dd>
+      <dt>学籍番号</dt><dd>17TI046</dd>
+      <dt>学年</dt><dd>3</dd>
+    </dl>
+  </div>
+</div>
+<div class="schedule-info">
+
+
+<p><a href="{% url 'toportal' %}">東工大ポータル(kamihate)</a></p>
+<p><a href="{% url 'toportal(beta)' %}">東工大ポータル(beta)</a></p>
+
+  <form action="{% url 'QRmatrix' %}" method="post">
+      {% csrf_token %}
+  <table>
+    <thead>
+      <tr align="center">
+        <th width="20%">  </th>
+        <th>A</th>
+        <th>B</th>
+        <th>C</th>
+        <th>D</th>
+        <th>E</th>
+        <th>F</th>
+        <th>G</th>
+        <th>H</th>
+        <th>I</th>
+        <th>J</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <td>1</td>
+			<td>{{QR_form.A1}}</td>
+			<td>{{QR_form.B1}}</td>
+      <td>{{QR_form.C1}}</td>
+			<td>{{QR_form.D1}}</td>
+      <td>{{QR_form.E1}}</td>
+			<td>{{QR_form.F1}}</td>
+      <td>{{QR_form.G1}}</td>
+			<td>{{QR_form.H1}}</td>
+      <td>{{QR_form.I1}}</td>
+			<td>{{QR_form.J1}}</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>{{QR_form.A2}}</td>
+			<td>{{QR_form.B2}}</td>
+      <td>{{QR_form.C2}}</td>
+			<td>{{QR_form.D2}}</td>
+      <td>{{QR_form.E2}}</td>
+			<td>{{QR_form.F2}}</td>
+      <td>{{QR_form.G2}}</td>
+			<td>{{QR_form.H2}}</td>
+      <td>{{QR_form.I2}}</td>
+			<td>{{QR_form.J2}}</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>{{QR_form.A3}}</td>
+			<td>{{QR_form.B3}}</td>
+      <td>{{QR_form.C3}}</td>
+			<td>{{QR_form.D3}}</td>
+      <td>{{QR_form.E3}}</td>
+			<td>{{QR_form.F3}}</td>
+      <td>{{QR_form.G3}}</td>
+			<td>{{QR_form.H3}}</td>
+      <td>{{QR_form.I3}}</td>
+			<td>{{QR_form.J3}}</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>{{QR_form.A4}}</td>
+			<td>{{QR_form.B4}}</td>
+      <td>{{QR_form.C4}}</td>
+			<td>{{QR_form.D4}}</td>
+      <td>{{QR_form.E4}}</td>
+			<td>{{QR_form.F4}}</td>
+      <td>{{QR_form.G4}}</td>
+			<td>{{QR_form.H4}}</td>
+      <td>{{QR_form.I4}}</td>
+			<td>{{QR_form.J4}}</td>
+		</tr>
+    <tr>
+			<td>5</td>
+			<td>{{QR_form.A5}}</td>
+			<td>{{QR_form.B5}}</td>
+      <td>{{QR_form.C5}}</td>
+			<td>{{QR_form.D5}}</td>
+      <td>{{QR_form.E5}}</td>
+			<td>{{QR_form.F5}}</td>
+      <td>{{QR_form.G5}}</td>
+			<td>{{QR_form.H5}}</td>
+      <td>{{QR_form.I5}}</td>
+			<td>{{QR_form.J5}}</td>
+		</tr>
+    <tr>
+			<td>6</td>
+			<td>{{QR_form.A6}}</td>
+			<td>{{QR_form.B6}}</td>
+      <td>{{QR_form.C6}}</td>
+			<td>{{QR_form.D6}}</td>
+      <td>{{QR_form.E6}}</td>
+			<td>{{QR_form.F6}}</td>
+      <td>{{QR_form.G6}}</td>
+			<td>{{QR_form.H6}}</td>
+      <td>{{QR_form.I6}}</td>
+			<td>{{QR_form.J6}}</td>
+		</tr>
+    <tr>
+			<td>7</td>
+			<td>{{QR_form.A7}}</td>
+			<td>{{QR_form.B7}}</td>
+      <td>{{QR_form.C7}}</td>
+			<td>{{QR_form.D7}}</td>
+      <td>{{QR_form.E7}}</td>
+			<td>{{QR_form.F7}}</td>
+      <td>{{QR_form.G7}}</td>
+			<td>{{QR_form.H7}}</td>
+      <td>{{QR_form.I7}}</td>
+			<td>{{QR_form.J7}}</td>
+		</tr>
+    </tbody>
+  </table>
+  <input type="submit" value="update">
+
+  </form>
+</div>
+{% endblock %}

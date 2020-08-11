@@ -1,0 +1,89 @@
+/* Example of msg-card-container */
+/*
+<div class="msg-card-container">
+  <div class="msg-card">
+    <header>
+      <img class="msg-profile-img" src="profile.png"></img>
+      <span class="msg-owner">Taro</span>
+    </header>
+    <section class="msg-content"></section>
+    <footer>
+      <p>Date: ... </p>
+    </footer>
+  </div>
+  ...
+</div>
+*/
+/* ==================== */
+
+.msg-card-container {
+  padding: 10px;
+  background-color: #fff;
+}
+.msg-card {
+  margin: 5px 10px;
+  padding: 20px 20px;
+  border: 1px solid #9e9e9e;
+  background-color: #fafafa;
+}
+
+.msg-card header {
+  background-color: #fafafa;
+  margin-bottom: 5px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.msg-card header .msg-owner {
+  font-weight: bold;
+  color: #333333;
+}
+.msg-card header .msg-profile-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #000;
+  margin-right: 5px;
+  background: #fff;
+}
+
+.msg-card footer {
+  color: #666;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 2px 0 0 0;
+}
+
+.msg-card footer p{
+  padding: 0;
+  margin: 0 0 0 5px;
+}
+
+.msg-card .msg-content {
+  padding: 5px;
+  background-color: #E0E0E0;
+  border-radius: 5px;
+  margin-top: 10px;
+  color: #333333;
+}
+
+
+.msg-card-white {
+  border: none;
+  border-top: 1px solid #ccc;
+  background-color: white;
+}
+.msg-card-white:last-child {
+  border-bottom: 1px solid #ccc;
+}
+.msg-card-white header {
+  background-color: white;
+}
+.msg-card-white .msg-content {
+  border: none;
+  background-color: white;
+}
