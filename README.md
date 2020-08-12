@@ -1,2 +1,10 @@
 # Supertitech_app
-Django web app
+Schedule Web app and Share past exam paper 
+
+# To see at local
+```
+gunicorn supertitech_app.wsgi
+```
+
+# To see at website
+Come [here](https://newsupertitech.herokuapp.com/login) 
