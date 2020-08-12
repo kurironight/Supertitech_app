@@ -1,1 +1,1 @@
-web: gunicorn supertitech_app.wsgi
+web: gunicorn mysite.wsgi
