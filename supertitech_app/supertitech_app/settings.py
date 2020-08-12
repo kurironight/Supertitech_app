@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-import django_heroku
+import dj_database_url
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -129,7 +129,14 @@ TIME_ZONE = 'Asia/Tokyo'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-django_heroku.settings(locals())
+
+DATABASES['default'] = dj_database_url.config()
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ALLOWED_HOSTS = ['*']
+
+STATIC_ROOT = 'staticfiles'
 
 DEBUG = False
 
@@ -137,7 +144,3 @@ try:
     from .local_settings import *
 except ImportError:
     pass
-
-if not DEBUG:
-    import django_heroku
-    django_heroku.settings(locals())
