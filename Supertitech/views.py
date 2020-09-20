@@ -127,19 +127,6 @@ def QRmatrixsite(request):
 
 
 @login_required
-def goportal(request):
-    scrapingLogin()
-    data = QRmatrix.objects.get(owner=request.user)
-    form = QRmatrixForm(instance=data)
-
-    return render(request, 'Supertitech/QRmatrix.html', {
-        'message': 'success',
-        'QR_form': form,
-    })
-
-    # 学籍番号及びPWが必要、それがあればどのアカウントでも入れる
-
-
 def goportalbeta(request):
 
     data = QRmatrix.objects.get(owner=request.user)
@@ -456,6 +443,8 @@ def docdelete(request, document_id):
     return render(request, 'Supertitech/reputation.html', params)
 
 # いいねボタンを押したとき
+
+
 @login_required
 def good(request, repu_id):
     get_reputation = Reputation.objects.get(id=repu_id)
@@ -496,6 +485,8 @@ def good(request, repu_id):
     return render(request, 'Supertitech/reputation.html', params)
 
 # 自分のレビューを削除するとき
+
+
 @login_required
 def repudelete(request, delete_id):
     get_reputation = Reputation.objects.get(id=delete_id)
