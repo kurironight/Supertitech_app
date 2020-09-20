@@ -78,24 +78,25 @@ def upload(request):
         return render(request, 'Supertitech/upload.html')
 
 
-def profile(request):
+def change_profile_image(request):
     if request.method == 'POST':
         form = ProfilImageForm(request.POST, request.FILES)
         if form.is_valid():
             ProfilImage.objects.filter(owner=request.user).delete()
-            image = form.save()
+            image = ProfilImage()
+            image.photo = form.cleaned_data['photo']
+            image.description = form.cleaned_data['description']
             image.owner = request.user
             image.save()
-
-            return redirect('test')
+            request.method = 'GET'
+            return menu(request)
     else:
         form = ProfilImageForm()
         obj = ProfilImage.objects.filter(owner=request.user)
-
-    return render(request, 'Supertitech/profile.html', {
-        'form': form,
-        'obj': obj
-    })
+        return render(request, 'Supertitech/change_profile_image.html', {
+            'form': form,
+            'obj': obj
+        })
 
 
 @login_required
@@ -216,10 +217,9 @@ def menu(request):
     }
     return render(request, 'Supertitech/menu.html', params)
 
-# 授業を時間割に登録する
-
 
 def add(request, subject_id):
+    # 授業を時間割に登録する
     subject = Subject.objects.get(id=subject_id)
     get_subject = Subject.objects.filter(title=subject.title)
     flag = True
@@ -456,6 +456,8 @@ def docdelete(request, document_id):
     return render(request, 'Supertitech/reputation.html', params)
 
 # いいねボタンを押したとき
+
+
 @login_required
 def good(request, repu_id):
     get_reputation = Reputation.objects.get(id=repu_id)
@@ -496,6 +498,8 @@ def good(request, repu_id):
     return render(request, 'Supertitech/reputation.html', params)
 
 # 自分のレビューを削除するとき
+
+
 @login_required
 def repudelete(request, delete_id):
     get_reputation = Reputation.objects.get(id=delete_id)
