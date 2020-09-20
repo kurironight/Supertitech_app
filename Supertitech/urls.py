@@ -18,7 +18,6 @@ urlpatterns = [
     #path('test', views.test, name='test'),
     path('QRmatrix', views.QRmatrixsite, name='QRmatrix'),
     path('toportal(beta)', views.goportalbeta, name='toportal(beta)'),
-    path('toportal', views.goportal, name='toportal'),
     path('profile', views.profile, name='profile'),
     path('upload', views.upload, name='upload'),
     #path('examupload/<int:subject_id>', views.examupload, name='examupload'),
