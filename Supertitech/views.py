@@ -93,9 +93,18 @@ def change_profile_image(request):
     else:
         form = ProfilImageForm()
         obj = ProfilImage.objects.filter(owner=request.user)
+
+        public = User.objects.filter(username='public').first()
+        default_image = ProfilImage.objects.filter(owner=public).first()
+        profiles = ProfilImage.objects.filter(owner=request.user)
+        if profiles.first() is None:
+            profilimage = default_image
+        else:
+            profilimage = profiles.first()
         return render(request, 'Supertitech/change_profile_image.html', {
             'form': form,
-            'obj': obj
+            'obj': obj,
+            'profilimage': profilimage,
         })
 
 
@@ -111,10 +120,6 @@ def QRmatrixsite(request):
 
             QR.owner = request.user  # Set the user object here
             QR.save()  # Now you can send it to DB
-
-        return render(request, 'Supertitech/QRmatrix.html', {
-            'QR_form': form,
-        })
     else:
         try:
             data = QRmatrix.objects.get(owner=request.user)
@@ -122,9 +127,18 @@ def QRmatrixsite(request):
         except:
             form = QRmatrixForm()
 
-        return render(request, 'Supertitech/QRmatrix.html', {
-            'QR_form': form,
-        })
+    public = User.objects.filter(username='public').first()
+    default_image = ProfilImage.objects.filter(owner=public).first()
+    profiles = ProfilImage.objects.filter(owner=request.user)
+    if profiles.first() is None:
+        profilimage = default_image
+    else:
+        profilimage = profiles.first()
+
+    return render(request, 'Supertitech/QRmatrix.html', {
+        'QR_form': form,
+        'profilimage': profilimage,
+    })
 
 
 @login_required
@@ -169,6 +183,13 @@ def signup(request):
 def menu(request):
     # publicは、searchリンクに曜日および時間の情報を伝えるため、ダミーで作ったユーザー
     public = User.objects.filter(username='public').first()
+    default_image = ProfilImage.objects.filter(owner=public).first()
+    profiles = ProfilImage.objects.filter(owner=request.user)
+    if profiles.first() is None:
+        profilimage = default_image
+    else:
+        profilimage = profiles.first()
+
     if request.method == 'POST':
         quarterselection = QuarterSelectformenu(request.POST)
         qota = request.POST['choice']
@@ -214,6 +235,7 @@ def menu(request):
         'user': request.user,
         'quarter_form': quarterselection,
         'times': schedule,
+        'profilimage': profilimage,
     }
     return render(request, 'Supertitech/menu.html', params)
 
