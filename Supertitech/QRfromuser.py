@@ -45,11 +45,6 @@ def QRLogin(Dictionary):
     # time.sleep(1)
 
     # あなたのユーザー名/メールアドレス
-    #username = '16B11094'
-    # あなたのパスワード
-    #password = 'Kamihate3510'
-
-    # あなたのユーザー名/メールアドレス
     gakuseki = Dictionary['gakuseki']
     # あなたのパスワード
     password = Dictionary['PW']

@@ -142,19 +142,6 @@ def QRmatrixsite(request):
 
 
 @login_required
-def goportal(request):
-    scrapingLogin()
-    data = QRmatrix.objects.get(owner=request.user)
-    form = QRmatrixForm(instance=data)
-
-    return render(request, 'Supertitech/QRmatrix.html', {
-        'message': 'success',
-        'QR_form': form,
-    })
-
-    # 学籍番号及びPWが必要、それがあればどのアカウントでも入れる
-
-
 def goportalbeta(request):
 
     data = QRmatrix.objects.get(owner=request.user)

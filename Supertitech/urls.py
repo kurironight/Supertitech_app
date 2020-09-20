@@ -22,7 +22,6 @@ urlpatterns = [
          name='change_profile_image'),
     path('QRmatrix', views.QRmatrixsite, name='QRmatrix'),
     path('toportal(beta)', views.goportalbeta, name='toportal(beta)'),
-    path('toportal', views.goportal, name='toportal'),
     path('upload', views.upload, name='upload'),
     #path('examupload/<int:subject_id>', views.examupload, name='examupload'),
     #path('documentupload/<int:subject_id>', views.documentupload, name='documentupload'),
