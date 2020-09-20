@@ -9,7 +9,7 @@ gunicorn supertitech_app.wsgi
 # To see at website
 Come [here](https://newsupertitech.herokuapp.com/login)  
 
-Guest login id
-user: guest
+Guest login id  
+user: guest  
 PW: titech
 
