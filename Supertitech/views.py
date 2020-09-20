@@ -168,6 +168,16 @@ def signup(request):
 def menu(request):
     # publicは、searchリンクに曜日および時間の情報を伝えるため、ダミーで作ったユーザー
     public = User.objects.filter(username='public').first()
+    # リクエストユーザーからプロフィール画像を取ってくる処理
+    profiles = request.user.profilimage_set.all()
+    default_image = ProfilImage.objects.filter(description='default').first()
+    # 新規登録されたユーザーはprofilesが空なので、その場合に限りデフォルト画像を追加する
+    if profiles.first() is None:
+        default_image.owner.add(request.user)
+        profilimage = default_image
+    else:
+        profilimage = profiles.first()
+
     if request.method == 'POST':
         quarterselection = QuarterSelectformenu(request.POST)
         qota = request.POST['choice']
@@ -213,6 +223,7 @@ def menu(request):
         'user': request.user,
         'quarter_form': quarterselection,
         'times': schedule,
+        'profilimage': profilimage,
     }
     return render(request, 'Supertitech/menu.html', params)
 

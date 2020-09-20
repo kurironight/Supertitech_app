@@ -69,10 +69,9 @@ class Res(models.Model):
 class ProfilImage(models.Model):
     description = models.CharField(max_length=255, blank=True)
     photo = models.ImageField(
-        upload_to='profilimages/', default='media/profilimages/bigmac_l.png')
+        upload_to='profilimages/', default='media/profileimages/bigmac_l.png')
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    owner = models.OneToOneField(
-        User, on_delete='CASCADE', default=1, related_name="profile", blank=True)
+    owner = models.ManyToManyField(User, blank=True)
 
 
 class QRmatrix(models.Model):
