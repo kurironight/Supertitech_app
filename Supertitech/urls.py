@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+from supertitech_app import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('', views.menu, name='menu'),
@@ -15,10 +18,10 @@ urlpatterns = [
     path('delete/<int:delete_id>', views.repudelete, name="delete"),
     path('resdelete/<int:delete_id>', views.resdelete, name="resdelete"),
     #path('res/<int:subject_id>', views.bulletinPost, name="res"),
-    #path('test', views.test, name='test'),
+    path('change_profile_image', views.change_profile_image,
+         name='change_profile_image'),
     path('QRmatrix', views.QRmatrixsite, name='QRmatrix'),
     path('toportal(beta)', views.goportalbeta, name='toportal(beta)'),
-    path('profile', views.profile, name='profile'),
     path('upload', views.upload, name='upload'),
     #path('examupload/<int:subject_id>', views.examupload, name='examupload'),
     #path('documentupload/<int:subject_id>', views.documentupload, name='documentupload'),

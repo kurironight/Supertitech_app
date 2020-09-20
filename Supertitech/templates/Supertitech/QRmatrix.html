@@ -17,8 +17,12 @@
 <div class="student-info-outer">
   <h3>学生情報</h3>
   <div class="student-info">
+    <a href="{% url 'change_profile_image' %}"><img src="{{profilimage.photo.url}}"></img></a>
     <ul>
-      <li><p>名前</p>    <p>{{user}}</p></li>
+      <li>
+        <p>名前</p>
+        <p>{{user}}</p>
+      </li>
     </ul>
   </div>
 </div>
